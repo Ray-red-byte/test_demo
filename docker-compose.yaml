@@ -1,24 +1,18 @@
 version: '3.3'
 
 services:
-  frontend:
+  php:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    image: gcr.io/terraform-429505/my-combined-app-frontend:latest
-    command: >
-      sh -c "
-      cp -r /app/my-vue-app/dist/* /var/www/html/frontend/
-      "
-
-  combined-app:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-    image: gcr.io/terraform-429505/my-combined-app:latest
+      context: ./backend
+    image: gcr.io/terraform-429505/my-combined-app-php:latest
     ports:
       - "8000:80"
     volumes:
       - ./backend:/var/www/html
-    depends_on:
-      - frontend
+
+  frontend:
+    build:
+      context: ./frontend
+    
+    ports:
+      - "5000:5000"
