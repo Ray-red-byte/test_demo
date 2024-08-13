@@ -1,6 +1,3 @@
-options:
-  logging: CLOUD_LOGGING_ONLY  # Or specify 'build.logs_bucket' for Cloud Storage logging
-
 steps:
 # Install Docker Compose
 - name: 'gcr.io/cloud-builders/docker'
@@ -20,8 +17,8 @@ steps:
       docker-compose -f docker-compose.yaml build
       docker-compose -f docker-compose.yaml push
 
-# Optionally, deploy images to Cloud Run
-# Uncomment and adjust if you want to deploy automatically
+# Optional: Deploy images to Cloud Run
+# Uncomment if needed
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   args:
 #     - 'run'
@@ -47,7 +44,3 @@ steps:
 #     - '--region'
 #     - 'us-central1'
 #     - '--allow-unauthenticated'
-
-images:
-- 'gcr.io/terraform-429505/my-vue-app:latest'
-- 'gcr.io/terraform-429505/my-php:latest'
