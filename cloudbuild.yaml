@@ -48,3 +48,6 @@ steps:
 #     - '--region'
 #     - 'us-central1'
 #     - '--allow-unauthenticated'
+
+images:
+- 'gcr.io/terraform-429505/my-combined-app:latest'
