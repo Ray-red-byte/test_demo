@@ -1,7 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY  # Or specify 'build.logs_bucket' for Cloud Storage logging
 
-
 steps:
 # Install Docker Compose
 - name: 'gcr.io/cloud-builders/docker'
@@ -12,42 +11,21 @@ steps:
       curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose
       chmod +x /usr/local/bin/docker-compose
 
-# Build and Push Images using Docker Compose
+# Build images using Docker Compose
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'sh'
   args:
     - '-c'
     - |
       docker-compose -f docker-compose.yaml build
-      docker-compose -f docker-compose.yaml push
 
-# Optional: Deploy images to Cloud Run
-# Uncomment if needed
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#     - 'run'
-#     - 'deploy'
-#     - 'my-vue-app'
-#     - '--image'
-#     - 'gcr.io/terraform-429505/my-vue-app:latest'
-#     - '--platform'
-#     - 'managed'
-#     - '--region'
-#     - 'us-central1'
-#     - '--allow-unauthenticated'
+# Tag the built image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'my-combined-app:latest', 'gcr.io/terraform-429505/my-combined-app:latest']
 
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#     - 'run'
-#     - 'deploy'
-#     - 'my-php'
-#     - '--image'
-#     - 'gcr.io/terraform-429505/my-php:latest'
-#     - '--platform'
-#     - 'managed'
-#     - '--region'
-#     - 'us-central1'
-#     - '--allow-unauthenticated'
+# Push the image to Google Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/terraform-429505/my-combined-app:latest']
 
 images:
 - 'gcr.io/terraform-429505/my-combined-app:latest'
