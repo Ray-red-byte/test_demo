@@ -1,3 +1,7 @@
+options:
+  logging: CLOUD_LOGGING_ONLY  # Or specify 'build.logs_bucket' for Cloud Storage logging
+
+
 steps:
 # Install Docker Compose
 - name: 'gcr.io/cloud-builders/docker'
