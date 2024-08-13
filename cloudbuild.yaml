@@ -6,12 +6,10 @@ steps:
 # Build the Vue.js application
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/terraform-429505/my-vue-app:latest', 'frontend']
-  dir: 'frontend'
 
 # Build the PHP backend
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/terraform-429505/my-php:latest', 'backend']
-  dir: 'backend'
 
 # Optionally, you can push the images to Google Container Registry
 - name: 'gcr.io/cloud-builders/docker'
@@ -20,31 +18,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/terraform-429505/my-php:latest']
 
-# Deploy to Google Cloud Run or another service (if needed)
-# Uncomment and adjust if you want to deploy automatically
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#     - 'run'
-#     - 'deploy'
-#     - 'my-vue-app'
-#     - '--image'
-#     - 'gcr.io/$PROJECT_ID/my-vue-app:latest'
-#     - '--platform'
-#     - 'managed'
-#     - '--region'
-#     - 'us-central1'
 
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#     - 'run'
-#     - 'deploy'
-#     - 'my-php'
-#     - '--image'
-#     - 'gcr.io/$PROJECT_ID/my-php:latest'
-#     - '--platform'
-#     - 'managed'
-#     - '--region'
-#     - 'us-central1'
 
 images:
 - 'gcr.io/terraform-429505/my-vue-app:latest'
