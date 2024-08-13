@@ -1,10 +1,20 @@
 version: '3.3'
 
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: gcr.io/terraform-429505/my-combined-app-frontend:latest
+    command: >
+      sh -c "
+      cp -r /app/my-vue-app/dist/* /var/www/html/frontend/
+      "
+
   combined-app:
     build:
       context: .
-      dockerfile: backend/Dockerfile  # Start with the backend Dockerfile
+      dockerfile: backend/Dockerfile
     image: gcr.io/terraform-429505/my-combined-app:latest
     ports:
       - "8000:80"
@@ -12,17 +22,3 @@ services:
       - ./backend:/var/www/html
     depends_on:
       - frontend
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    command: |
-      sh -c "
-      cp -r /app/my-vue-app/dist/* /var/www/html/frontend/ &&
-      apache2-foreground
-      "
-    image: gcr.io/terraform-429505/my-combined-app-frontend:latest
-    depends_on:
-      - combined-app
-
