@@ -5,7 +5,7 @@ FROM php:8.2-apache
 COPY . /var/www/html/
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 80
 
 # Start Apache server
 CMD ["apache2-foreground"]

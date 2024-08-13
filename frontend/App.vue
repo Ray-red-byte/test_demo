@@ -17,7 +17,7 @@ export default {
   },
   mounted() {
     // Make a request to the PHP backend
-    fetch("http://localhost:8081/hello.php")
+    fetch("http://localhost:8000/hello.php")
       .then(response => response.json())
       .then(data => {
         this.backendMessage = data.message;

@@ -1,25 +1,27 @@
 options:
   logging: CLOUD_LOGGING_ONLY  # Or specify 'build.logs_bucket' for Cloud Storage logging
 
-
 steps:
-# Build the Vue.js application
+# Install Docker Compose
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/terraform-429505/my-vue-app:latest', 'frontend']
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
 
-# Build the PHP backend
+# Build and Push Images using Docker Compose
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/terraform-429505/my-php:latest', 'backend']
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      docker-compose -f docker-compose.yaml build
+      docker-compose -f docker-compose.yaml push
 
-# Optionally, you can push the images to Google Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/terraform-429505/my-vue-app:latest']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/terraform-429505/my-php:latest']
-
-
-# # Deploy the Vue.js application to Cloud Run
+# Optionally, deploy images to Cloud Run
+# Uncomment and adjust if you want to deploy automatically
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   args:
 #     - 'run'
@@ -33,7 +35,6 @@ steps:
 #     - 'us-central1'
 #     - '--allow-unauthenticated'
 
-# # Deploy the PHP backend to Cloud Run
 # - name: 'gcr.io/cloud-builders/gcloud'
 #   args:
 #     - 'run'
