@@ -18,33 +18,34 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/terraform-429505/my-php:latest']
 
-# Deploy the Vue.js application to Cloud Run
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'run'
-    - 'deploy'
-    - 'my-vue-app'
-    - '--image'
-    - 'gcr.io/terraform-429505/my-vue-app:latest'
-    - '--platform'
-    - 'managed'
-    - '--region'
-    - 'us-central1'
-    - '--allow-unauthenticated'
 
-# Deploy the PHP backend to Cloud Run
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'run'
-    - 'deploy'
-    - 'my-php'
-    - '--image'
-    - 'gcr.io/terraform-429505/my-php:latest'
-    - '--platform'
-    - 'managed'
-    - '--region'
-    - 'us-central1'
-    - '--allow-unauthenticated'
+# # Deploy the Vue.js application to Cloud Run
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args:
+#     - 'run'
+#     - 'deploy'
+#     - 'my-vue-app'
+#     - '--image'
+#     - 'gcr.io/terraform-429505/my-vue-app:latest'
+#     - '--platform'
+#     - 'managed'
+#     - '--region'
+#     - 'us-central1'
+#     - '--allow-unauthenticated'
+
+# # Deploy the PHP backend to Cloud Run
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args:
+#     - 'run'
+#     - 'deploy'
+#     - 'my-php'
+#     - '--image'
+#     - 'gcr.io/terraform-429505/my-php:latest'
+#     - '--platform'
+#     - 'managed'
+#     - '--region'
+#     - 'us-central1'
+#     - '--allow-unauthenticated'
 
 images:
 - 'gcr.io/terraform-429505/my-vue-app:latest'
