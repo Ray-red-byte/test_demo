@@ -4,6 +4,7 @@ services:
   php:
     build:
       context: ./backend
+    image: gcr.io/terraform-429505/my-combined-app-php:latest
     ports:
       - "8000:80"
     volumes:
@@ -12,5 +13,6 @@ services:
   frontend:
     build:
       context: ./frontend
+    image: gcr.io/terraform-429505/my-combined-app-frontend:latest
     ports:
       - "5000:5000"
